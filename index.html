@@ -1,294 +1,282 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cartoon Cosmos — блог о мультиках</title>
-  <meta name="description" content="Яркий личный блог о мультиках в стиле максимализм." />
-  <style>
-    :root{
-      --bg:#12081f;
-      --panel:rgba(255,255,255,.10);
-      --panel2:rgba(255,255,255,.14);
-      --text:#fff9ff;
-      --muted:rgba(255,249,255,.78);
-      --stroke:rgba(255,255,255,.18);
-      --pink:#ff4fd8;
-      --yellow:#ffe85c;
-      --cyan:#49f6ff;
-      --violet:#9a6dff;
-      --orange:#ff8a4c;
-      --green:#73ffb4;
-      --shadow:0 18px 60px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0}
-    body{
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at 10% 10%, rgba(255,79,216,.32), transparent 22%),
-        radial-gradient(circle at 80% 0%, rgba(73,246,255,.25), transparent 20%),
-        radial-gradient(circle at 80% 80%, rgba(255,232,92,.20), transparent 18%),
-        linear-gradient(135deg, #160a28 0%, #1d1038 45%, #0f1730 100%);
-      min-height:100vh;
-      overflow-x:hidden;
-    }
-    .confetti{
-      position:fixed; inset:0; pointer-events:none; opacity:.9;
-      background:
-        radial-gradient(circle, rgba(255,255,255,.22) 0 2px, transparent 3px) 0 0/42px 42px,
-        radial-gradient(circle, rgba(255,232,92,.35) 0 1.5px, transparent 3px) 10px 12px/36px 36px,
-        radial-gradient(circle, rgba(73,246,255,.30) 0 1.8px, transparent 3px) 18px 6px/44px 44px;
-      mix-blend-mode:screen;
-      mask-image:linear-gradient(180deg, rgba(0,0,0,.65), transparent 95%);
-    }
-    .wrap{max-width:1240px;margin:0 auto;padding:24px 18px 44px;position:relative;z-index:1}
-    header{
-      display:flex;justify-content:space-between;align-items:center;gap:16px;
-      padding:18px 20px;border:1px solid var(--stroke);border-radius:28px;
-      background:linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
-      backdrop-filter:blur(14px);box-shadow:var(--shadow)
-    }
-    .brand{display:flex;align-items:center;gap:14px}
-    .badge{
-      width:56px;height:56px;border-radius:18px;
-      background:linear-gradient(135deg,var(--pink),var(--cyan),var(--yellow));
-      box-shadow:0 0 0 6px rgba(255,255,255,.08), 0 0 30px rgba(255,79,216,.35);
-      display:grid;place-items:center;color:#14081f;font-weight:900;font-size:1.15rem;
-      transform:rotate(-10deg);
-    }
-    .brand h1{margin:0;font-size:1.1rem;line-height:1.1}
-    .brand p{margin:5px 0 0;color:var(--muted);font-size:.95rem}
-    nav{display:flex;gap:12px;flex-wrap:wrap}
-    nav a{
-      color:var(--text);text-decoration:none;font-weight:800;font-size:.95rem;
-      padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.10)
-    }
-    .hero{
-      margin-top:22px;
-      display:grid;grid-template-columns:1.35fr .85fr;gap:18px;
-    }
-    .card{
-      border:1px solid var(--stroke);
-      border-radius:30px;
-      background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.07));
-      box-shadow:var(--shadow);
-      backdrop-filter:blur(14px);
-    }
-    .hero-main{padding:34px;position:relative;overflow:hidden}
-    .hero-main:before,.hero-main:after{
-      content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.85
-    }
-    .hero-main:before{width:180px;height:180px;background:radial-gradient(circle, rgba(255,232,92,.88), rgba(255,232,92,.08) 62%, transparent 72%);right:-40px;top:-30px}
-    .hero-main:after{width:240px;height:240px;background:radial-gradient(circle, rgba(73,246,255,.55), rgba(73,246,255,.08) 58%, transparent 72%);left:-70px;bottom:-70px}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:9px 14px;border-radius:999px;
-      background:rgba(255,79,216,.16);border:1px solid rgba(255,79,216,.28);
-      font-weight:800;letter-spacing:.02em
-    }
-    .hero h2{
-      margin:18px 0 14px;
-      font-size:clamp(2.2rem, 5.8vw, 5rem);
-      line-height: .94;
-      max-width:11ch;
-      text-shadow:0 6px 0 rgba(0,0,0,.15);
-    }
-    .hero p{
-      margin:0;max-width:64ch;color:var(--muted);font-size:1.05rem;line-height:1.7;
-      position:relative;z-index:1
-    }
-    .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;position:relative;z-index:1}
-    .btn{
-      padding:13px 18px;border-radius:16px;text-decoration:none;font-weight:900;
-      border:1px solid rgba(255,255,255,.15)
-    }
-    .btn.primary{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#231106}
-    .btn.secondary{background:rgba(255,255,255,.08);color:var(--text)}
-    .hero-side{padding:18px;display:grid;gap:14px}
-    .sticker{
-      padding:18px;border-radius:24px;
-      background:
-        linear-gradient(135deg, rgba(255,79,216,.22), rgba(73,246,255,.14)),
-        rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.12);
-      position:relative;overflow:hidden
-    }
-    .sticker:nth-child(2){
-      background:linear-gradient(135deg, rgba(255,232,92,.24), rgba(154,109,255,.14));
-    }
-    .sticker:nth-child(3){
-      background:linear-gradient(135deg, rgba(115,255,180,.22), rgba(255,138,76,.14));
-    }
-    .sticker strong{display:block;font-size:1.8rem;line-height:1;margin-bottom:6px}
-    .sticker span{color:var(--muted)}
-    .grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns:repeat(12,1fr);
-      gap:18px;
-    }
-    .section{padding:24px}
-    .section h3{
-      margin:0 0 10px;
-      font-size:1.25rem;
-      display:flex;align-items:center;gap:10px
-    }
-    .section p{margin:0;color:var(--muted);line-height:1.7}
-    .about{grid-column:span 4}
-    .posts{grid-column:span 8}
-    .post-list{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns:repeat(2,1fr);
-      gap:16px;
-    }
-    .post{
-      padding:18px;border-radius:22px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
-      border:1px solid rgba(255,255,255,.12);
-      position:relative;overflow:hidden
-    }
-    .post:before{
-      content:"";position:absolute;inset:auto -20px -30px auto;width:110px;height:110px;
-      background:radial-gradient(circle, rgba(255,79,216,.42), transparent 68%);
-    }
-    .tag{
-      display:inline-block;margin-bottom:10px;padding:6px 10px;border-radius:999px;
-      background:rgba(73,246,255,.15);border:1px solid rgba(73,246,255,.22);
-      font-size:.82rem;font-weight:800
-    }
-    .post h4{margin:0 0 8px;font-size:1.05rem}
-    .gallery{grid-column:span 12}
-    .art-grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:16px;
-    }
-    .art{
-      min-height:190px;border-radius:24px;position:relative;overflow:hidden;
-      border:1px solid rgba(255,255,255,.15);
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)
-    }
-    .art:nth-child(1){background:linear-gradient(135deg,#ff4fd8,#ff8a4c,#ffe85c)}
-    .art:nth-child(2){background:linear-gradient(135deg,#49f6ff,#9a6dff,#ff4fd8)}
-    .art:nth-child(3){background:linear-gradient(135deg,#73ffb4,#49f6ff,#ffe85c)}
-    .art:nth-child(4){background:linear-gradient(135deg,#ffe85c,#ff8a4c,#9a6dff)}
-    .art .label{
-      position:absolute;left:16px;bottom:16px;right:16px;
-      font-weight:900;font-size:1.05rem;text-shadow:0 2px 0 rgba(0,0,0,.2)
-    }
-    .footer{
-      margin-top:18px;padding:18px 22px;text-align:center;color:var(--muted)
-    }
-    .spark{
-      display:inline-block;width:10px;height:10px;border-radius:50%;
-      background:var(--yellow);box-shadow:0 0 16px var(--yellow), 0 0 24px rgba(255,232,92,.4);
-      margin-right:8px
-    }
-    @media (max-width: 960px){
-      .hero,.about,.posts,.gallery{grid-column:span 12}
-      .hero{grid-template-columns:1fr}
-      .post-list,.art-grid{grid-template-columns:1fr 1fr}
-    }
-    @media (max-width: 640px){
-      header{flex-direction:column;align-items:flex-start}
-      nav{width:100%}
-      nav a{flex:1 1 auto;text-align:center}
-      .post-list,.art-grid{grid-template-columns:1fr}
-      .hero-main{padding:24px}
-      .section{padding:20px}
-      .hero h2{max-width:100%}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>МУЛЬТИВселенная • Яркий блог о мультиках</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Comic+Neue:wght@700&display=swap');
+        
+        :root {
+            --pink: #ff00aa;
+            --cyan: #00ffff;
+            --yellow: #ffff00;
+            --lime: #39ff14;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(45deg, #1a0033, #330033, #003333);
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--pink), #aa00ff, var(--cyan));
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(255, 0, 170, 0.8);
+        }
+        
+        .header h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 3.5rem;
+            text-shadow: 
+                5px 5px 0 #ffff00,
+                -5px -5px 0 #00ffff;
+            animation: rainbow 3s infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { color: #ff00aa; }
+            25% { color: #ffff00; }
+            50% { color: #00ffff; }
+            75% { color: #39ff14; }
+            100% { color: #ff00aa; }
+        }
+        
+        .nav {
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            border-bottom: 4px solid var(--yellow);
+        }
+        
+        .nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 10px 20px;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover {
+            border: 3px solid var(--yellow);
+            background: rgba(255,255,0,0.2);
+            transform: scale(1.1);
+        }
+        
+        .hero {
+            height: 70vh;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1618331837611-5e3c3c3e3c3c?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 4rem;
+            text-shadow: 0 0 20px black;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.8rem;
+            max-width: 800px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--yellow);
+            text-shadow: 3px 3px 0 #ff00aa;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .post-card {
+            background: rgba(255,255,255,0.1);
+            border: 5px solid var(--cyan);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(0,255,255,0.3);
+        }
+        
+        .post-card:hover {
+            transform: translateY(-20px) scale(1.05);
+            border-color: var(--yellow);
+        }
+        
+        .post-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+        
+        .post-content {
+            padding: 20px;
+        }
+        
+        .post-content h3 {
+            color: var(--pink);
+            margin-bottom: 10px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: var(--lime);
+            color: black;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .sidebar {
+            background: rgba(0,0,0,0.6);
+            padding: 30px;
+            border: 4px solid var(--pink);
+            margin-top: 60px;
+            border-radius: 20px;
+        }
+        
+        footer {
+            background: linear-gradient(to right, #330033, #003333);
+            text-align: center;
+            padding: 40px;
+            margin-top: 80px;
+            border-top: 6px solid var(--yellow);
+        }
+        
+        .sparkles {
+            position: absolute;
+            font-size: 2rem;
+            animation: sparkle 4s infinite;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="confetti"></div>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="badge">CC</div>
-        <div>
-          <h1>Cartoon Cosmos</h1>
-          <p>Блог о мультиках, теориях и любимых вселенных</p>
-        </div>
-      </div>
-      <nav>
-        <a href="#about">О блоге</a>
-        <a href="#posts">Посты</a>
-        <a href="#gallery">Галерея</a>
-      </nav>
+    <header class="header">
+        <h1>МУЛЬТИВселенная</h1>
+        <p style="font-size:1.4rem; margin-top:10px;">Яркий блог о любимых мультиках</p>
     </header>
-
+    
+    <nav class="nav">
+        <a href="#">Главная</a>
+        <a href="#">Гравити Фолз</a>
+        <a href="#">Время Приключений</a>
+        <a href="#">Вселенная Стивена</a>
+        <a href="#">Рик и Морти</a>
+        <a href="#">Обо мне</a>
+    </nav>
+    
     <section class="hero">
-      <div class="card hero-main">
-        <div class="pill">✨ Максимализм · неон · фан-энергия</div>
-        <h2>Мир мультсериалов, где всё сияет</h2>
-        <p>Это яркий личный блог о любимых мультвселенных: загадки, персонажи, арты, теории, смешные моменты и большие эмоции. Визуальный стиль — очень насыщенный, плакатный и праздничный, с ощущением космического фан-мира.</p>
-        <div class="actions">
-          <a class="btn primary" href="#posts">Смотреть посты</a>
-          <a class="btn secondary" href="#gallery">Открыть галерею</a>
+        <div class="hero-content">
+            <h2>ДОБРО ПОЖАЛОВАТЬ В ХАОС!</h2>
+            <p>Здесь мы говорим о мультиках, которые изменили нас навсегда</p>
+            <div style="margin-top:30px; font-size:2rem;">✦ ★ ✦ ★ ✦</div>
         </div>
-      </div>
-
-      <aside class="card hero-side">
-        <div class="sticker"><strong>03</strong><span>любимые фандомы в одном месте</span></div>
-        <div class="sticker"><strong>99%</strong><span>яркости и визуального шума, но со вкусом</span></div>
-        <div class="sticker"><strong>24/7</strong><span>обсуждаем теории, музыку и персонажей</span></div>
-      </aside>
     </section>
-
-    <section class="grid">
-      <article class="card section about" id="about">
-        <h3><span class="spark"></span>О блоге</h3>
-        <p>Этот блог — место для заметок про <b>Steven Universe</b>, <b>Gravity Falls</b>, <b>Adventure Time</b> и похожие яркие истории. Здесь можно собирать обзоры серий, фан-теории, подборки персонажей, мемы и впечатления после пересмотра.</p>
-      </article>
-
-      <article class="card section posts" id="posts">
-        <h3><span class="spark"></span>Последние записи</h3>
-        <p>Карточки ниже можно заменить на свои настоящие публикации.</p>
-
-        <div class="post-list">
-          <div class="post">
-            <div class="tag">Теории</div>
-            <h4>Почему вселенная Стивена так цепляет</h4>
-            <p>Немного про эмоции, музыку, визуальные символы и то, как сериал говорит о взрослении.</p>
-          </div>
-          <div class="post">
-            <div class="tag">Загадки</div>
-            <h4>Что спрятано в Gravity Falls</h4>
-            <p>Любимые шифры, тайны, пасхалки и смешные детали, которые хочется пересматривать снова.</p>
-          </div>
-          <div class="post">
-            <div class="tag">Персонажи</div>
-            <h4>Кто самый хаотичный в Adventure Time</h4>
-            <p>Сравниваем самых странных, милых и легендарных героев мультвселенной.</p>
-          </div>
-          <div class="post">
-            <div class="tag">Арты</div>
-            <h4>Палитры, которые хочется сохранить</h4>
-            <p>Подборка ярких сочетаний цвета для фан-арта, постеров и визуального дневника.</p>
-          </div>
+    
+    <div class="container">
+        <h2 class="section-title">★ Последние посты ★</h2>
+        
+        <div class="posts-grid">
+            <!-- Пост 1 -->
+            <div class="post-card">
+                <img src="https://images.unsplash.com/photo-1634942537038-1d6e0c9c0d5e?ixlib=rb-4.0.3" alt="Гравити Фолз">
+                <div class="post-content">
+                    <h3>Почему Гравити Фолз — лучший мультфильм всех времён?</h3>
+                    <p>Алекс Хирш создал настоящий шедевр. Тайны, юмор, персонажи — всё идеально.</p>
+                    <span class="tag">#ГравитиФолз</span>
+                </div>
+            </div>
+            
+            <!-- Пост 2 -->
+            <div class="post-card">
+                <img src="https://images.unsplash.com/photo-1612033450392-3f2b2e2e2e2e?ixlib=rb-4.0.3" alt="Время Приключений">
+                <div class="post-content">
+                    <h3>Финал Времени Приключений: стоит ли пересматривать?</h3>
+                    <p>От Финна и Джейка до Fionna and Cake — как менялась вселенная.</p>
+                    <span class="tag">#ВремяПриключений</span>
+                </div>
+            </div>
+            
+            <!-- Пост 3 -->
+            <div class="post-card">
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3" alt="Вселенная Стивена">
+                <div class="post-content">
+                    <h3>Вселенная Стивена: уроки эмоционального интеллекта</h3>
+                    <p>Как мультфильм учит нас принимать себя и других.</p>
+                    <span class="tag">#StevenUniverse</span>
+                </div>
+            </div>
         </div>
-      </article>
-
-      <section class="card section gallery" id="gallery">
-        <h3><span class="spark"></span>Галерея настроения</h3>
-        <p>Ниже — четыре ярких блока, как будто это обложки альбомов для любимых мультмиров.</p>
-        <div class="art-grid">
-          <div class="art"><div class="label">Gem core</div></div>
-          <div class="art"><div class="label">Mystery woods</div></div>
-          <div class="art"><div class="label">Candy chaos</div></div>
-          <div class="art"><div class="label">Cosmic sparkle</div></div>
+        
+        <div class="sidebar">
+            <h2 style="color:var(--yellow); margin-bottom:20px;">Популярные разделы</h2>
+            <ul style="font-size:1.3rem; line-height:2.2;">
+                <li>✦ Теории и скрытые смыслы</li>
+                <li>✦ Лучшие саундтреки</li>
+                <li>✦ Персонажи, которых мы любим</li>
+                <li>✦ Кроссоверы и фанатские работы</li>
+                <li>✦ Новые мультики 2025-2026</li>
+            </ul>
         </div>
-      </section>
-    </section>
-
-    <div class="footer">© 2026 Cartoon Cosmos · One-file HTML mockup for GitHub Pages</div>
-  </div>
+    </div>
+    
+    <footer>
+        <p style="font-size:2rem;">Сделано с любовью к мультикам ❤️</p>
+        <p>Максимализм 100% • Яркость перегрузка</p>
+        <p style="margin-top:20px;">© 2026 МУЛЬТИВселенная</p>
+    </footer>
+    
+    <script>
+        // Маленькая анимация искр
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkles';
+            sparkle.textContent = ['✦','★','✧'][Math.floor(Math.random()*3)];
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.color = ['#ffff00','#00ffff','#ff00aa'][Math.floor(Math.random()*3)];
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 4000);
+        }
+        
+        setInterval(createSparkle, 300);
+    </script>
 </body>
 </html>
